@@ -45,8 +45,12 @@
 (defun org-agenda-heading-functions--redo-all-agenda-buffers ()
   "Refresh/redo all org-agenda buffers."
   (interactive)
-  (let (buffer)
-    (dolist (buffer (doom-visible-buffers))
+  (let ((visible-buffers
+         (if (fboundp 'doom-visible-buffers)
+             (doom-visible-buffers) ; Doom vers if available
+           (delete-dups (mapcar #'window-buffer (window-list)))))
+        buffer)
+    (dolist (buffer visible-buffers)
       (with-current-buffer buffer
         (when (derived-mode-p 'org-agenda-mode)
           (org-agenda-redo))))))
