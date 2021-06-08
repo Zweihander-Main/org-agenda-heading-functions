@@ -3,7 +3,7 @@
 
 (package-file "org-agenda-heading-functions.el")
 
-(files "process-org-agenda-inbox-test.el")
+(files "org-agenda-heading-functions.el")
 
 (depends-on "org")
 (depends-on "org-statistics-cookie-helpers" :git "https://github.com/Zweihander-Main/org-statistics-cookie-helpers.git" :files ("org-statistics-cookie-helpers.el"))
