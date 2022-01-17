@@ -5,8 +5,9 @@
 
 (files "org-agenda-heading-functions.el")
 
-(depends-on "org")
 (depends-on "org-statistics-cookie-helpers" :git "https://github.com/Zweihander-Main/org-statistics-cookie-helpers.git" :files ("org-statistics-cookie-helpers.el"))
+
+(depends-on "org")
 
 (development
  (depends-on "f")
