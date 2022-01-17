@@ -3,9 +3,10 @@
 ;; Copyright (C) 2021, Zweihänder <zweidev@zweihander.me>
 ;;
 ;; Author: Zweihänder
-;; Keywords: org-mode, org-agenda
+;; Keywords: outlines
 ;; Homepage: https://github.com/Zweihander-Main/org-agenda-heading-functions
 ;; Version: 0.0.1
+;; Package-Requires: ((emacs "27.1"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -43,13 +44,12 @@
   "Current saved effort for agenda items.")
 
 (defun org-agenda-heading-functions--redo-all-agenda-buffers ()
-  "Refresh/redo all org-agenda buffers."
+  "Refresh/redo all `org-agenda' buffers."
   (interactive)
   (let ((visible-buffers
          (if (fboundp 'doom-visible-buffers)
              (doom-visible-buffers) ; Doom vers if available
-           (delete-dups (mapcar #'window-buffer (window-list)))))
-        buffer)
+           (delete-dups (mapcar #'window-buffer (window-list))))))
     (dolist (buffer visible-buffers)
       (with-current-buffer buffer
         (when (derived-mode-p 'org-agenda-mode)
@@ -109,8 +109,7 @@
 
 ;;;###autoload
 (defun org-agenda-heading-functions-break-into-child (child)
-  "Create CHILD heading under current heading with the same properties and
-custom effort."
+  "Create CHILD heading under current heading with same props and effort."
   (interactive
    (list (read-string "Child task: " nil nil nil)))
   (org-agenda-check-no-diary)
@@ -128,7 +127,7 @@ custom effort."
         (setq cur-line (thing-at-point 'line t))
         (if (string-match org-priority-regexp cur-line)
             (setq cur-priority (match-string 2 cur-line)))
-        (setq cur-tags (org-get-tags-string))
+        (setq cur-tags (org-make-tag-string (org-get-tags)))
         (setq cur-stats-cookies (org-statistics-cookie-helpers-find-cookies))
         (if (eq cur-stats-cookies 'nil)
             (org-statistics-cookie-helpers-insert-cookies))
@@ -160,6 +159,7 @@ custom effort."
 
 ;; Local Variables:
 ;; coding: utf-8
+;; flycheck-disabled-checkers: 'emacs-lisp-elsa
 ;; End:
 
 ;;; org-agenda-heading-functions.el ends here
